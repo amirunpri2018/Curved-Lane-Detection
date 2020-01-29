@@ -139,7 +139,7 @@ left_a, left_b, left_c = [], [], []
 right_a, right_b, right_c = [], [], []
 
 
-def sliding_window(img, nwindows=15, margin=15, minpix=1, draw_windows=True):
+def sliding_window(img, nwindows=15, margin=50, minpix=1, draw_windows=True):
     global left_a, left_b, left_c, right_a, right_b, right_c
     left_fit_ = np.empty(3)
     right_fit_ = np.empty(3)
@@ -337,3 +337,17 @@ def stackImages(scale,imgArray):
         hor= np.hstack(imgArray)
         ver = hor
     return ver
+
+def drawLines(img,lane_curve):
+    myWidth = img.shape[1]
+    myHeight = img.shape[0]
+    print(myWidth,myHeight)
+    for x in range(-30, 30):
+        w = myWidth // 20
+        cv2.line(img, (w * x + int(lane_curve // 100), myHeight - 30),
+                 (w * x + int(lane_curve // 100), myHeight), (0, 0, 255), 2)
+    cv2.line(img, (int(lane_curve // 100) + myWidth // 2, myHeight - 30),
+             (int(lane_curve // 100) + myWidth // 2, myHeight), (0, 255, 0), 3)
+    cv2.line(img, (myWidth // 2, myHeight - 50), (myWidth // 2, myHeight), (0, 255, 255), 2)
+
+    return img
